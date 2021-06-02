@@ -1,2 +1,6 @@
 rootProject.name = "Movie MVVM"
 include ':app'
+include ':domain'
+include ':data'
+include ':api'
+include ':local'
