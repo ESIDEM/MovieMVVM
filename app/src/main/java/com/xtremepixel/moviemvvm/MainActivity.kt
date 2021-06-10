@@ -7,10 +7,10 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xtremepixel.moviemvvm.adapter.MovieAdapter
+import com.xtremepixel.moviemvvm.databinding.ActivityMainBinding
 import com.xtremepixel.moviemvvm.viewmodel.MovieViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -19,16 +19,18 @@ class MainActivity : AppCompatActivity() {
     lateinit var movieRecyclerView: RecyclerView
     lateinit var progressBar: ProgressBar
     lateinit var errorTextView: TextView
+    lateinit var activityMainBinding: ActivityMainBinding
     private val movieListAdapter = MovieAdapter(arrayListOf())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(activityMainBinding.root)
 
         viewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
         viewModel.refresh()
-        movieRecyclerView = findViewById(R.id.moviesList)
-        progressBar = findViewById(R.id.loadingView)
-        errorTextView = findViewById(R.id.listError)
+        movieRecyclerView = activityMainBinding.moviesList
+        progressBar = activityMainBinding.loadingView
+        errorTextView = activityMainBinding.listError
         movieRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = movieListAdapter
