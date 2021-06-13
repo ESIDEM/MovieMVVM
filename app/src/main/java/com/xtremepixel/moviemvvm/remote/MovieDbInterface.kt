@@ -1,9 +1,8 @@
-package com.xtremepixel.moviemvvm.api
+package com.xtremepixel.moviemvvm.remote
 
 import com.xtremepixel.moviemvvm.models.MovieModel
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 import rx.Single
 
@@ -18,5 +17,5 @@ interface MovieDbInterface {
 //
 
 @GET("movie/popular")
-suspend fun getPopularMovies(@Query("api_key")api_key:String):Response<MovieModel>
+suspend fun getPopularMovies():Response<MovieModel>
 }

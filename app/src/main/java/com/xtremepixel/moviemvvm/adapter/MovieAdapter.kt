@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.xtremepixel.moviemvvm.Config
 import com.xtremepixel.moviemvvm.R
 import com.xtremepixel.moviemvvm.databinding.ItemMovieBinding
 import com.xtremepixel.moviemvvm.models.Movie
@@ -20,9 +21,9 @@ class MovieAdapter(private var movies:ArrayList<Movie>):RecyclerView.Adapter<Mov
         notifyDataSetChanged()
     }
 
-    companion object {
-         private const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342"
-     }
+//    companion object {
+//         private const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342"
+//     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
        val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(binding)
@@ -40,7 +41,7 @@ class MovieAdapter(private var movies:ArrayList<Movie>):RecyclerView.Adapter<Mov
         val movieRating = binding.ratingBar
         val movieOverView = binding.overview
         fun bind(movie: Movie) {
-            val moviePosterURL = POSTER_BASE_URL + movie.posterPath
+            val moviePosterURL = Config.IMAGE_URL + movie.posterPath
             movieTitle.text = movie.title
             movieOverView.text = movie.overview
             movieRating.rating = movie.voteAverage.toFloat()

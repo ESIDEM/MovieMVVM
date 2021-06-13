@@ -5,17 +5,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xtremepixel.moviemvvm.adapter.MovieAdapter
+import com.xtremepixel.moviemvvm.data.Resource
 import com.xtremepixel.moviemvvm.databinding.ActivityMainBinding
 import com.xtremepixel.moviemvvm.viewmodel.MovieViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    lateinit var viewModel: MovieViewModel
+    private val viewModel by viewModels<MovieViewModel>()
     lateinit var movieRecyclerView: RecyclerView
     lateinit var progressBar: ProgressBar
     lateinit var errorTextView: TextView
@@ -25,9 +28,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
-
-        viewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
-        viewModel.refresh()
         movieRecyclerView = activityMainBinding.moviesList
         progressBar = activityMainBinding.loadingView
         errorTextView = activityMainBinding.listError
@@ -39,22 +39,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.movies.observe(this, Observer {countries ->
-            countries?.let {
-                movieRecyclerView.visibility = View.VISIBLE
-                movieListAdapter.updateCountries(it) }
-        })
-        viewModel.movieLoadError.observe(this, Observer { isError ->
-            errorTextView.visibility = if(isError == "") View.GONE else View.VISIBLE
-        })
-        viewModel.loading.observe(this, Observer { isLoading ->
-            isLoading?.let {
-                progressBar.visibility = if(it) View.VISIBLE else View.GONE
-                if(it) {
-                    errorTextView.visibility = View.GONE
-                    movieRecyclerView.visibility = View.GONE
+        viewModel.movieData.observe(this, Observer { result ->
+
+            when (result.status) {
+                Resource.Status.SUCCESS -> {
+                    result.data?.results?.let { list ->
+                        movieListAdapter.updateCountries(list)
+                    }
+                    progressBar.visibility = View.GONE
+                }
+
+                Resource.Status.ERROR -> {
+                    result.message?.let {
+                        errorTextView.visibility = View.VISIBLE
+                    }
+                    progressBar.visibility = View.GONE
+                }
+
+                Resource.Status.LOADING -> {
+                    progressBar.visibility = View.VISIBLE
                 }
             }
+
         })
     }
 }

@@ -1,52 +1,29 @@
 package com.xtremepixel.moviemvvm.viewmodel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.xtremepixel.moviemvvm.api.MovieDBService
-import com.xtremepixel.moviemvvm.models.Movie
-import kotlinx.coroutines.*
+import androidx.lifecycle.*
+import com.xtremepixel.moviemvvm.data.MovieRepository
+import com.xtremepixel.moviemvvm.data.Resource
+import com.xtremepixel.moviemvvm.models.MovieModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MovieViewModel():ViewModel() {
+@HiltViewModel
+class MovieViewModel @Inject constructor(private val movieRepository: MovieRepository):ViewModel() {
 
-    val movieDBService = MovieDBService.getMovieDbInterface()
-    var job:Job? = null
-    val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
-        onError("Exception handled: ${throwable.localizedMessage}")
-    }
-    val movies = MutableLiveData<List<Movie>>()
-    val movieLoadError = MutableLiveData<String?>()
-    val loading = MutableLiveData<Boolean>()
+    private val _movieList = MutableLiveData<Resource<MovieModel>>()
+    val movieData = _movieList
 
-    private fun onError(s: String) {
-        movieLoadError.value = s
-        loading.value = false
-    }
-
-    private fun fetchMovies() {
-        loading.value = true
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val response = movieDBService.getPopularMovies("205d1d516432851bf13809d2adf550bd")
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    movies.value = response.body()?.results
-                    movieLoadError.value = null
-                    loading.value = false
-                } else {
-                    onError("Error : ${response.message()} ")
-                }
+    fun getMovies() {
+        viewModelScope.launch {
+            movieRepository.getMovies().collect {
+                _movieList.value = it
             }
         }
-        movieLoadError.value = ""
-        loading.value = false
-    }
 
-    fun refresh() {
-        fetchMovies()
     }
-
-    override fun onCleared() {
-        super.onCleared()
-        job?.cancel()
-    }
-
+init {
+    getMovies()
+}
 }
