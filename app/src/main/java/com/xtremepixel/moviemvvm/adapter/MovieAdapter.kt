@@ -13,7 +13,7 @@ import com.xtremepixel.moviemvvm.R
 import com.xtremepixel.moviemvvm.databinding.ItemMovieBinding
 import com.xtremepixel.moviemvvm.models.Movie
 
-class MovieAdapter(private var movies:ArrayList<Movie>):RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+class MovieAdapter(private var movies:ArrayList<Movie>,private val movieClickedListiner:MovieClickedListener):RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     fun updateCountries(newMovies: List<Movie>) {
         movies.clear()
@@ -21,9 +21,6 @@ class MovieAdapter(private var movies:ArrayList<Movie>):RecyclerView.Adapter<Mov
         notifyDataSetChanged()
     }
 
-//    companion object {
-//         private const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342"
-//     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
        val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(binding)
@@ -31,6 +28,9 @@ class MovieAdapter(private var movies:ArrayList<Movie>):RecyclerView.Adapter<Mov
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(movies[position])
+        holder.itemView.setOnClickListener {
+            movieClickedListiner.onMovieClicked(position)
+        }
     }
 
     override fun getItemCount() = movies.size
@@ -53,6 +53,12 @@ class MovieAdapter(private var movies:ArrayList<Movie>):RecyclerView.Adapter<Mov
                 .into(moviePoster)
         }
 
+
+    }
+
+    interface  MovieClickedListener{
+
+        fun onMovieClicked(position: Int)
     }
 
 }
