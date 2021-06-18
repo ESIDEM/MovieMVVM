@@ -1,33 +1,52 @@
 package com.xtremepixel.moviemvvm.adapter
 
+import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RatingBar
+import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.NonNull
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.xtremepixel.moviemvvm.Config
 import com.xtremepixel.moviemvvm.R
 import com.xtremepixel.moviemvvm.databinding.ItemMovieBinding
+import com.xtremepixel.moviemvvm.dp
+import com.xtremepixel.moviemvvm.load
 import com.xtremepixel.moviemvvm.models.Movie
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.format.FormatStyle
 
-class MovieAdapter(private var movies:ArrayList<Movie>,private val movieClickedListiner:MovieClickedListener):RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
-
-    fun updateCountries(newMovies: List<Movie>) {
-        movies.clear()
-        movies.addAll(newMovies)
-        notifyDataSetChanged()
-    }
+class MovieAdapter(private val context: Context?,private var movies:ArrayList<Movie>,private val movieClickedListiner:MovieClickedListener):RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-       val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = ItemMovieBinding.inflate(LayoutInflater.from(context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(movies[position])
+        val movie = movies[position]
+        holder.tvMovieTitle.text = movie.title
+        holder.tvMovieDescription.text = context?.getString(R.string.movie_row_desc_pattern,
+            if (movie.releaseDate.isNotEmpty())
+                LocalDate.parse(movie.releaseDate).format(DateTimeFormatter.ofLocalizedDate(
+                    FormatStyle.MEDIUM))
+            else context.getString(R.string.no_release_date),
+            getRating(movie)
+        )
+
+        holder.ivMoviePoster.setImageResource(R.drawable.ic_launcher_background)
+       // holder.ivMoviePoster.transitionName = movie.id.toString()
+        holder.llMovieTextContainer.setBackgroundColor(Color.DKGRAY)
+
+        holder.ivMoviePoster.load(url = Config.IMAGE_URL + movie.posterPath,
+            crossFade = true, width = 160.dp, height = 160.dp) { color ->
+
+            holder.llMovieTextContainer.setBackgroundColor(color)
+        }
+
         holder.itemView.setOnClickListener {
             movieClickedListiner.onMovieClicked(position)
         }
@@ -35,30 +54,36 @@ class MovieAdapter(private var movies:ArrayList<Movie>,private val movieClickedL
 
     override fun getItemCount() = movies.size
 
-    class ViewHolder(binding: ItemMovieBinding):RecyclerView.ViewHolder(binding.root) {
-        val movieTitle = binding.textTitle
-        val moviePoster = binding.imagePoster
-        val movieRating = binding.ratingBar
-        val movieOverView = binding.overview
-        fun bind(movie: Movie) {
-            val moviePosterURL = Config.IMAGE_URL + movie.posterPath
-            movieTitle.text = movie.title
-            movieOverView.text = movie.overview
-            movieRating.rating = movie.voteAverage.toFloat()
-            movieRating.numStars=5
-            Glide.with(itemView.context)
-                .load(moviePosterURL)
-                .error(R.drawable.ic_launcher_background)
-                .centerInside()
-                .into(moviePoster)
-        }
-
-
+    fun fillList(items: List<Movie>) {
+        this.movies += items
+        notifyDataSetChanged()
     }
 
-    interface  MovieClickedListener{
+    fun clear() {
+        this.movies = arrayListOf()
+    }
+
+    interface MovieClickedListener {
 
         fun onMovieClicked(position: Int)
     }
 
+    fun getRating(movie: Movie): String {
+        return if (movie.voteCount == 0 && context != null) {
+            context.getString(R.string.no_ratings)
+        } else {
+            val starIcon = 9733.toChar()
+            "${movie.voteAverage} $starIcon"
+        }
+    }
 }
+    class ViewHolder(binding: ItemMovieBinding):RecyclerView.ViewHolder(binding.root) {
+
+        val cvMovieContainer: CardView = binding.cvMovieContainer
+        val llMovieTextContainer: LinearLayout = binding.textContainer
+        val tvMovieTitle: TextView = binding.movieTitle
+        val tvMovieDescription: TextView = binding.tvMovieDescription
+        val ivMoviePoster: ImageView = binding.moviePoster
+
+    }
+

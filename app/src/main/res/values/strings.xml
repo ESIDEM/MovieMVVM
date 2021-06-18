@@ -2,4 +2,12 @@
     <string name="app_name">Movie App</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="votes_pattern">%s votes</string>
+    <string name="no_ratings">No ratings</string>
+    <string name="no_release_date">No release date</string>
+    <string name="error_message_pattern">Error: %s</string>
+    <string name="popular_movies">Popular</string>
+    <string name="upcoming_movies">Upcoming</string>
+    <string name="favorite_movies">Favorite</string>
+    <string name="movie_row_desc_pattern" translatable="false">%s\u0020\u0020&#8226;\u0020\u0020%s</string>
 </resources>

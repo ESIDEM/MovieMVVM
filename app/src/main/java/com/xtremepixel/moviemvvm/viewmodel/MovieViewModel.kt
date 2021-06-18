@@ -14,16 +14,36 @@ class MovieViewModel @Inject constructor(private val movieRepository: MovieRepos
 
     private val _movieList = MutableLiveData<Resource<MovieModel>>()
     val movieData = _movieList
+    private var currentPage = 1
+    private var lastPage = 100
 
     fun getMovies() {
         viewModelScope.launch {
-            movieRepository.getMovies().collect {
+            movieRepository.getPopularMovies(currentPage).collect {
                 _movieList.value = it
+               // lastPage = it!!.data!!.totalPages
             }
         }
 
     }
-init {
-    getMovies()
-}
+
+
+    fun fetchNextPopularMovies() {
+        currentPage++
+        getMovies()
+    }
+
+    fun refreshPopularMovies() {
+        currentPage = 1
+        getMovies()
+    }
+
+    fun isFirstPage(): Boolean {
+        return currentPage == 1
+    }
+
+    fun isLastPage(): Boolean {
+        return currentPage == lastPage
+    }
+
 }
