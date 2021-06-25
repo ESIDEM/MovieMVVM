@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/nav_popular"
-        android:name="com.xtremepixel.moviemvvm.MovieListFragment"
+        android:name="com.xtremepixel.moviemvvm.popular.presentation.MovieListFragment"
         android:label="@string/popular_movies"
         tools:layout="@layout/fragment_movie_list">
 
