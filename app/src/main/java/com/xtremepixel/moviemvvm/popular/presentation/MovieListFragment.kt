@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.xtremepixel.moviemvvm.R
 import com.xtremepixel.moviemvvm.common.presentation.adapter.MovieAdapter
 import com.xtremepixel.moviemvvm.common.presentation.Event
+import com.xtremepixel.moviemvvm.common.presentation.adapter.InfiniteScrollListener
 import com.xtremepixel.moviemvvm.databinding.FragmentMovieListBinding
 import com.xtremepixel.moviemvvm.popular.presentation.viewmodel.PopularMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint

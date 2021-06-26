@@ -23,7 +23,7 @@ interface MovieDbInterface {
 suspend fun getPopularMovies(@Query(ApiParameters.PAGE) page: Int):MovieRemoteResponse
 
     @GET(Config.UPCOMING_MOVIE_ENDPOINT)
-    suspend fun getUpcomingMovies(@Query(ApiParameters.PAGE) page: Int): Response<MovieRemoteResponse>
+    suspend fun getUpcomingMovies(@Query(ApiParameters.PAGE) page: Int): MovieRemoteResponse
 
     @GET(Config.MOVIE_DETAIL_ENDPOINT)
     fun getSingleMovie(@Path(ApiParameters.ID) id: String): Response<MovieDetail>

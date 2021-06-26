@@ -29,4 +29,19 @@ class RepositoryImpL @Inject constructor(
             throw NetworkException(exception.message ?: "Code ${exception.code()}")
         }
     }
+
+    override suspend fun requestUpcominingMovies(pageToLoad: Int): PaginatedMovie {
+        try{
+            val response = api.getUpcomingMovies(pageToLoad)
+
+            return PaginatedMovie(
+                response.results.map {
+                    apiAnimalMapper.mapToDomain(it)
+                },
+                apiPaginationMapper.mapToDomain(response)
+            )
+        }catch (exception:HttpException){
+            throw NetworkException(exception.message ?: "Code ${exception.code()}")
+        }
+    }
 }

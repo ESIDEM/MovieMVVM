@@ -1,4 +1,4 @@
-package com.xtremepixel.moviemvvm.popular.presentation
+package com.xtremepixel.moviemvvm.common.presentation.adapter
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView

@@ -6,9 +6,9 @@
     <string name="no_ratings">No ratings</string>
     <string name="no_release_date">No release date</string>
     <string name="error_message_pattern">Error: %s</string>
-    <string name="popular_movies">Popular</string>
-    <string name="upcoming_movies">Upcoming</string>
-    <string name="favorite_movies">Favorite</string>
+    <string name="popular_movies">Popular Movies</string>
+    <string name="upcoming_movies">Upcoming Movies</string>
+    <string name="favorite_movies">Favorite Movies</string>
     <string name="an_error_occurred">Sorry, unable to fetch Movies at this time</string>
     <string name="movie_row_desc_pattern" translatable="false">%s\u0020\u0020&#8226;\u0020\u0020%s</string>
 </resources>

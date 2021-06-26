@@ -7,4 +7,5 @@ import io.reactivex.Flowable
 interface MovieRepository {
 
     suspend fun requestPopularMovies(pageToLoad: Int): PaginatedMovie
+    suspend fun requestUpcominingMovies(pageToLoad: Int): PaginatedMovie
 }
