@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/nav_upcoming"
-        android:name="com.xtremepixel.moviemvvm.UpcomingFragment"
+        android:name="com.xtremepixel.moviemvvm.upcoming.presentation.UpcomingFragment"
         android:label="@string/upcoming_movies"
         tools:layout="@layout/fragment_movie_list">
 
