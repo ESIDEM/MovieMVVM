@@ -20,15 +20,11 @@
 
     <fragment
         android:id="@+id/nav_movie_detail"
-        android:name="com.xtremepixel.moviemvvm.MovieDetailsFragment">
+        android:name="com.xtremepixel.moviemvvm.details.presentation.MovieDetailsFragment">
 
         <argument
             android:name="id"
             app:argType="integer" />
-
-        <argument
-            android:name="poster_path"
-            app:argType="string"/>
 
     </fragment>
 

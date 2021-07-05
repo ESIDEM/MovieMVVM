@@ -2,6 +2,7 @@ package com.xtremepixel.moviemvvm.common
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -42,9 +43,30 @@ class MainActivity : BaseActivity() {
         // Whenever the selected controller changes, setup the action bar.
         controller.observe(this, Observer { navController ->
             setupActionBarWithNavController(navController)
+            navController.addOnDestinationChangedListener { controller, destination, arguments ->
+                when (destination.id) {
+                    R.id.nav_popular -> showBottomNav()
+                    R.id.nav_upcoming -> showBottomNav()
+                    R.id.nav_favorite -> showBottomNav()
+                    else -> hideBottomNav()
+                }
+            }
         })
-
         currentNavController = controller
+
+
+    }
+
+    private fun showBottomNav() {
+        activityMainBinding.bottomNavigation.visibility = View.VISIBLE
+        activityMainBinding.toolbar.visibility = View.VISIBLE
+
+    }
+
+    private fun hideBottomNav() {
+        activityMainBinding.bottomNavigation.visibility = View.GONE
+        activityMainBinding.toolbar.visibility = View.GONE
+
     }
     override fun onSupportNavigateUp() = currentNavController?.value?.navigateUp() ?: false
 }

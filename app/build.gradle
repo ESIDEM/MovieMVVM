@@ -96,6 +96,8 @@ dependencies {
     //Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
+
+
     // Concurrency
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
@@ -118,6 +120,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    // Mockk
+    testImplementation "io.mockk:mockk:1.11.0"
+    androidTestImplementation "io.mockk:mockk-android:1.11.0"
 }
 }
 

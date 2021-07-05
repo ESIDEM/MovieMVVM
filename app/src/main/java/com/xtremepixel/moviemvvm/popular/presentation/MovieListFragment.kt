@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -50,7 +51,14 @@ class MovieListFragment : Fragment() {
     }
 
     private fun createAdapter(): MovieAdapter {
-        return MovieAdapter()
+        return MovieAdapter(object : MovieAdapter.MovieClickedListener{
+            override fun onMovieClicked(movieID: Int) {
+
+                val action = MovieListFragmentDirections.navigateToMovieDetails(movieID)
+                binding.root.findNavController().navigate(action)
+            }
+
+        })
     }
     private fun setupRecyclerView(movieAdapter: MovieAdapter) {
 

@@ -55,7 +55,12 @@ class UpcomingFragment : Fragment() {
     }
 
     private fun createAdapter(): MovieAdapter {
-        return MovieAdapter()
+        return MovieAdapter(object : MovieAdapter.MovieClickedListener{
+            override fun onMovieClicked(movieID: Int) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
     private fun setupRecyclerView(movieAdapter: MovieAdapter) {
 

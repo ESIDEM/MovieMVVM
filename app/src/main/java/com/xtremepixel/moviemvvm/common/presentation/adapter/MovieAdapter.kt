@@ -22,7 +22,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
 
-class MovieAdapter:ListAdapter<MovieUI,MovieAdapter.ViewHolder>(ITEM_COMPARATOR) {
+class MovieAdapter(private val listener:MovieClickedListener):ListAdapter<MovieUI,MovieAdapter.ViewHolder>(ITEM_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -36,7 +36,7 @@ class MovieAdapter:ListAdapter<MovieUI,MovieAdapter.ViewHolder>(ITEM_COMPARATOR)
 
     interface MovieClickedListener {
 
-        fun onMovieClicked(position: Int)
+        fun onMovieClicked(movieID: Int)
     }
 
     fun getRating(context: Context,movie: MovieUI): String {
@@ -65,6 +65,9 @@ class MovieAdapter:ListAdapter<MovieUI,MovieAdapter.ViewHolder>(ITEM_COMPARATOR)
              crossFade = true, width = 160.dp, height = 160.dp) { color ->
 
              binding.textContainer.setBackgroundColor(color)
+         }
+         binding.root.setOnClickListener {
+             listener.onMovieClicked(movieUI.id)
          }
      }
 
