@@ -26,5 +26,5 @@ suspend fun getPopularMovies(@Query(ApiParameters.PAGE) page: Int):MovieRemoteRe
     suspend fun getUpcomingMovies(@Query(ApiParameters.PAGE) page: Int): MovieRemoteResponse
 
     @GET(Config.MOVIE_DETAIL_ENDPOINT)
-    fun getSingleMovie(@Path(ApiParameters.ID) id: String): Response<MovieDetail>
+    suspend fun getSingleMovie(@Path(ApiParameters.ID) id: Int): MovieDetail
 }

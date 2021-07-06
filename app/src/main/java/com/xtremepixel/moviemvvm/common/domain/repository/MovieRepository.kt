@@ -8,4 +8,5 @@ interface MovieRepository {
 
     suspend fun requestPopularMovies(pageToLoad: Int): PaginatedMovie
     suspend fun requestUpcominingMovies(pageToLoad: Int): PaginatedMovie
+    suspend fun requestMovieDetails(movieId:Int):MovieDomain
 }

@@ -44,4 +44,13 @@ class RepositoryImpL @Inject constructor(
             throw NetworkException(exception.message ?: "Code ${exception.code()}")
         }
     }
+
+    override suspend fun requestMovieDetails(movieId: Int): MovieDomain {
+        try{
+            val response = api.getSingleMovie(movieId)
+           return apiAnimalMapper.mapMovieDetailToDomain(response)
+        }catch (exception:HttpException){
+            throw NetworkException(exception.message ?: "Code ${exception.code()}")
+        }
+    }
 }

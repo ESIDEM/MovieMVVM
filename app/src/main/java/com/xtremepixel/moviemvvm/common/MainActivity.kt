@@ -65,7 +65,7 @@ class MainActivity : BaseActivity() {
 
     private fun hideBottomNav() {
         activityMainBinding.bottomNavigation.visibility = View.GONE
-        activityMainBinding.toolbar.visibility = View.GONE
+       activityMainBinding.toolbar.visibility = View.GONE
 
     }
     override fun onSupportNavigateUp() = currentNavController?.value?.navigateUp() ?: false
