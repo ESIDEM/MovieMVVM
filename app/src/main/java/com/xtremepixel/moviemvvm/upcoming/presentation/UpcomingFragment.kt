@@ -56,7 +56,7 @@ class UpcomingFragment : Fragment() {
 
     private fun createAdapter(): MovieAdapter {
         return MovieAdapter(object : MovieAdapter.MovieClickedListener{
-            override fun onMovieClicked(movieID: Int) {
+            override fun onMovieClicked(movieID: Int?) {
                 TODO("Not yet implemented")
             }
 

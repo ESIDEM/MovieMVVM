@@ -43,7 +43,20 @@
             android:padding="16dp"
             app:layout_constraintTop_toBottomOf="@+id/imagePoster"
             tools:text="Star Wars: IV" />
-
+        <ProgressBar
+            android:id="@+id/loadingView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <RatingBar
             android:id="@+id/ratingBar"
             style="@style/RatingBar"
@@ -63,21 +76,6 @@
             app:layout_constraintStart_toEndOf="@+id/ratingBar"
             app:layout_constraintTop_toTopOf="@+id/ratingBar"
             tools:text="2.6k reviews" />
-
-        <TextView
-            android:id="@+id/textDuration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="@color/grey"
-            android:drawablePadding="4dp"
-            android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/textVoteCount"
-            tools:text="2 h 14 m"
-            app:drawableStartCompat="@drawable/ic_clock" />
-
         <TextView
             android:id="@+id/textReleaseDate"
             android:textSize="12sp"
@@ -88,7 +86,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/textDuration"
+            app:layout_constraintTop_toBottomOf="@+id/textVoteCount"
             tools:text="2019/12/31"
             app:drawableStartCompat="@drawable/ic_calender" />
 

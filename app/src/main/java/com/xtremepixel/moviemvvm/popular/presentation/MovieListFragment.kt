@@ -52,9 +52,9 @@ class MovieListFragment : Fragment() {
 
     private fun createAdapter(): MovieAdapter {
         return MovieAdapter(object : MovieAdapter.MovieClickedListener{
-            override fun onMovieClicked(movieID: Int) {
+            override fun onMovieClicked(movieID: Int?) {
 
-                val action = MovieListFragmentDirections.navigateToMovieDetails(movieID)
+                val action = MovieListFragmentDirections.navigateToMovieDetails(movieID!!)
                 binding.root.findNavController().navigate(action)
             }
 

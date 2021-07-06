@@ -36,7 +36,7 @@ class MovieAdapter(private val listener:MovieClickedListener):ListAdapter<MovieU
 
     interface MovieClickedListener {
 
-        fun onMovieClicked(movieID: Int)
+        fun onMovieClicked(movieID: Int?)
     }
 
     fun getRating(context: Context,movie: MovieUI): String {
@@ -53,7 +53,7 @@ class MovieAdapter(private val listener:MovieClickedListener):ListAdapter<MovieU
      fun bind(movieUI: MovieUI){
             binding.movieTitle.text = movieUI.title
          binding.tvMovieDescription.text = binding.root.context?.getString(R.string.movie_row_desc_pattern,
-             if (movieUI.releaseDate.isNotEmpty())
+             if (movieUI.releaseDate!!.isNotEmpty())
                  LocalDate.parse(movieUI.releaseDate).format(DateTimeFormatter.ofLocalizedDate(
                      FormatStyle.MEDIUM))
              else binding.root.context.getString(R.string.no_release_date),

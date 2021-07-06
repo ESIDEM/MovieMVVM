@@ -10,5 +10,7 @@
     <string name="upcoming_movies">Upcoming Movies</string>
     <string name="favorite_movies">Favorite Movies</string>
     <string name="an_error_occurred">Sorry, unable to fetch Movies at this time</string>
+    <string name="placeholder">--</string>
+    <string name="vote_count" formatted="false">%s reviews</string>
     <string name="movie_row_desc_pattern" translatable="false">%s\u0020\u0020&#8226;\u0020\u0020%s</string>
 </resources>
